@@ -98,6 +98,34 @@ def cantidad_por_continente():
     for cont, cantidad in conteo.items():
         print(f"{cont}: {cantidad} países")
 
+def agregar_pais():
+    #Agrega un país al CSV
+    pais = {}
+    pais["nombre"] = input("Ingrese el nombre del país: ").strip()
+    pais["nombre"] = pais["nombre"].title()
+
+    #Cargar países existentes para verificar si hay duplicados.
+    paises = cargar_paises()
+    if any(p["nombre"].lower() == pais["nombre"].lower() for p in paises):
+        print(f"{pais["nombre"]} ya existe en el archivo.")
+        return
+
+    try:
+        pais["poblacion"] = int(input("Ingrese la población: "))
+        pais["superficie"] = int(input("Ingrese la superficie (km²): "))
+    except ValueError:
+        print("Error: población y superficie deben ser números enteros.")
+        return
+
+    pais["continente"] = input("Ingrese el continente: ").strip()
+    pais["continente"] = pais["continente"].title()
+    
+    #Guardar país
+    with open(ARCHIVO, "a", encoding="utf-8", newline='') as archivo:
+        escritor = csv.DictWriter(archivo, fieldnames=ENCABEZADO)
+        escritor.writerow(pais)
+    print(f"{pais['nombre']} agregado.")
+
 def mostrar_lista(lista):
     #Recibe una lista de países (diccionarios).
     #Si la lista está vacía, muestra un mensaje. Si tiene elementos, los imprime en formato legible.
@@ -119,7 +147,8 @@ def menu():
         print("7. Ordenar por superficie")
         print("8. Mostrar estadísticas")
         print("9. Cantidad de países por continente")
-        print("10. Salir")
+        print("10. Agregar nuevo país")
+        print("11. Salir")
 
         try:
             opcion = int(input("Ingrese una opción: "))
@@ -151,6 +180,8 @@ def menu():
                 case 9:
                     cantidad_por_continente()
                 case 10:
+                    agregar_pais()
+                case 11:
                     print("Gracias por usar el sistema.")
                     break
                 case _:
