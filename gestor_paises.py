@@ -1,9 +1,13 @@
 import csv
 import os
 
+#Se define el encabezado y los continentes que serán válidos para los continentes.
+
 ARCHIVO = "paises.csv"
 ENCABEZADO = ["nombre", "poblacion", "superficie", "continente"]
 CONTINENTES_VALIDOS = ["América", "Asia", "Europa", "África", "Oceanía", "Antártida"]
+
+#Si el archivo paises.csv no existe se crea.
 
 def inicializar_archivo():
     if not os.path.exists(ARCHIVO):
@@ -11,6 +15,8 @@ def inicializar_archivo():
             escritor = csv.DictWriter(archivo, fieldnames=ENCABEZADO)
             escritor.writeheader()
         print("Archivo creado correctamente con encabezado:", ENCABEZADO)
+
+#Carga los países y verifica que no hayan habido cambios en el encabezado, o errores en el contenido.
 
 def cargar_paises():
     paises = []
@@ -36,6 +42,8 @@ def cargar_paises():
         print("Archivo no encontrado.")
         return []
 
+#Muestra la lista completa de países del csv.
+
 def mostrar_lista(lista):
     if not lista:
         print("No se encontraron resultados.")
@@ -43,30 +51,42 @@ def mostrar_lista(lista):
         for p in lista:
             print(f"{p['nombre']} - Población: {p['poblacion']} - Superficie: {p['superficie']} km² - Continente: {p['continente']}")
 
+#Carga la lista de paises y si coincide el nombre ingresado por el usuario muestra sus características.
+
 def buscar_pais(nombre):
     paises = cargar_paises()
     resultados = [p for p in paises if nombre.lower() in p["nombre"].lower()]
     mostrar_lista(resultados)
+
+#Muestra la lista de paises según el continente.
 
 def filtrar_por_continente(cont):
     paises = cargar_paises()
     filtrados = [p for p in paises if p["continente"].lower() == cont.lower()]
     mostrar_lista(filtrados)
 
+#Muestra según un rango mínimo y máximo de población.
+
 def filtrar_por_poblacion(min_pob, max_pob):
     paises = cargar_paises()
     filtrados = [p for p in paises if min_pob <= p["poblacion"] <= max_pob]
     mostrar_lista(filtrados)
+
+#Muestra según un rango mínimo y máximo de superficie.
 
 def filtrar_por_superficie(min_sup, max_sup):
     paises = cargar_paises()
     filtrados = [p for p in paises if min_sup <= p["superficie"] <= max_sup]
     mostrar_lista(filtrados)
 
+#
+
 def ordenar_paises(clave, descendente=False):
     paises = cargar_paises()
     ordenados = sorted(paises, key=lambda x: x[clave], reverse=descendente)
     mostrar_lista(ordenados)
+
+#Muestra estadisticas generales.
 
 def estadisticas():
     paises = cargar_paises()
@@ -84,6 +104,8 @@ def estadisticas():
     print(f"Promedio de población: {promedio_pob:.2f}")
     print(f"Promedio de superficie: {promedio_sup:.2f}")
 
+#Muestra los países por continente con un contador.
+
 def cantidad_por_continente():
     paises = cargar_paises()
     conteo = {}
@@ -93,6 +115,8 @@ def cantidad_por_continente():
     for cont, cantidad in conteo.items():
         print(f"{cont}: {cantidad} países")
 
+#Validar entero
+
 def ingresar_entero(mensaje):
     while True:
         try:
@@ -100,6 +124,8 @@ def ingresar_entero(mensaje):
             return valor
         except ValueError:
             print("Debe ingresar un número entero válido.")
+
+#Verificar que el rango maximo no sea menor al minimo.
 
 def ingresar_rango(mensaje_min, mensaje_max):
     while True:
@@ -110,6 +136,8 @@ def ingresar_rango(mensaje_min, mensaje_max):
         else:
             return min_val, max_val
 
+#Verificar continente.
+
 def ingresar_continente():
     while True:
         cont = input("Ingrese el continente: ").strip().title()
@@ -117,6 +145,8 @@ def ingresar_continente():
             return cont
         else:
             print(f"Continente inválido. Debe ser uno de: {', '.join(CONTINENTES_VALIDOS)}")
+
+#Agrega un país con todas sus caracteristicas.
 
 def agregar_pais():
     paises_existentes = cargar_paises()
@@ -146,6 +176,8 @@ def agregar_pais():
         escritor = csv.DictWriter(archivo, fieldnames=ENCABEZADO)
         escritor.writerow(pais)
     print(f"{nombre} agregado.")
+
+#Edita la característica seleccionada de un país.
 
 def editar_pais():
     paises = cargar_paises()
