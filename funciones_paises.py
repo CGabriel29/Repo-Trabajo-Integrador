@@ -6,9 +6,9 @@ import unicodedata  # Se importa para manejar acentos
 
 ARCHIVO = "paises.csv"
 ENCABEZADO = ["nombre", "poblacion", "superficie", "continente"]
-CONTINENTES_VALIDOS = ["América", "Asia", "Europa", "África", "Oceanía", "Antártida"]
+CONTINENTES_VALIDOS = ("América", "Asia", "Europa", "África", "Oceanía", "Antártida")
 
-# Función auxiliar para quitar acentos de los textos
+# Función para quitar acentos de los textos
 def quitar_acentos(texto):
     return ''.join(
         c for c in unicodedata.normalize('NFD', texto)
@@ -153,6 +153,7 @@ def ingresar_continente():
         if cont in CONTINENTES_VALIDOS:
             return cont
         else:
+            #Con join se muestra la lista de continentes validos separandolos con una coma y un espacio.
             print(f"Continente inválido. Debe ser uno de: {', '.join(CONTINENTES_VALIDOS)}")
 
 #Agrega un país con todas sus caracteristicas.

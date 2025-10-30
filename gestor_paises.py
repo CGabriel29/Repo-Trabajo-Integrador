@@ -1,6 +1,6 @@
 import runpy
 
-# Carga todas las funciones del otro archivo sin crear pycache
+#Carga funciones dentro del archivo.
 funcs = runpy.run_path("funciones_paises.py")
 
 def menu():
