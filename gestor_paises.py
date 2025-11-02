@@ -1,7 +1,11 @@
-import runpy
+from validaciones import ingresar_entero, ingresar_rango, ingresar_continente
+from utilidades import inicializar_archivo
+from busquedas import buscar_pais
+from filtros import filtrar_por_continente, filtrar_por_poblacion, filtrar_por_superficie
+from ordenamiento import ordenar_paises
+from estadisticas import estadisticas, cantidad_por_continente
+from gestion import agregar_pais, editar_pais
 
-#Carga funciones dentro del archivo.
-funcs = runpy.run_path("funciones_paises.py")
 
 def menu():
     while True:
@@ -19,42 +23,43 @@ def menu():
         print("11. Editar país")
         print("12. Salir")
 
-        opcion = funcs["ingresar_entero"]("Ingrese una opción: ")
+        opcion = ingresar_entero("Ingrese una opción: ")
         print("-----------------------------------")
 
         match opcion:
             case 1:
                 nombre = input("Ingrese nombre o parte del nombre: ")
-                funcs["buscar_pais"](nombre)
+                buscar_pais(nombre)
             case 2:
-                cont = funcs["ingresar_continente"]()
-                funcs["filtrar_por_continente"](cont)
+                cont = ingresar_continente()
+                filtrar_por_continente(cont)
             case 3:
-                min_p, max_p = funcs["ingresar_rango"]("Población mínima: ", "Población máxima: ")
-                funcs["filtrar_por_poblacion"](min_p, max_p)
+                min_p, max_p = ingresar_rango("Población mínima: ", "Población máxima: ")
+                filtrar_por_poblacion(min_p, max_p)
             case 4:
-                min_s, max_s = funcs["ingresar_rango"]("Superficie mínima: ", "Superficie máxima: ")
-                funcs["filtrar_por_superficie"](min_s, max_s)
+                min_s, max_s = ingresar_rango("Superficie mínima: ", "Superficie máxima: ")
+                filtrar_por_superficie(min_s, max_s)
             case 5:
-                funcs["ordenar_paises"]("nombre")
+                ordenar_paises("nombre")
             case 6:
-                funcs["ordenar_paises"]("poblacion", descendente=True)
+                ordenar_paises("poblacion", descendente=True)
             case 7:
-                funcs["ordenar_paises"]("superficie", descendente=True)
+                ordenar_paises("superficie", descendente=True)
             case 8:
-                funcs["estadisticas"]()
+                estadisticas()
             case 9:
-                funcs["cantidad_por_continente"]()
+                cantidad_por_continente()
             case 10:
-                funcs["agregar_pais"]()
+                agregar_pais()
             case 11:
-                funcs["editar_pais"]()
+                editar_pais()
             case 12:
                 print("Gracias por usar el sistema.")
                 break
             case _:
                 print("Opción inválida.")
 
+
 if __name__ == "__main__":
-    funcs["inicializar_archivo"]()
+    inicializar_archivo()
     menu()
