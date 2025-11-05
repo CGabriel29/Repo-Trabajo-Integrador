@@ -25,3 +25,5 @@ El archivo esta hecho para gestionar países, este es muy intuitivo y puedes ele
 a agregar o editar países correspondientemente y probar como funciona el programa, en cualquier caso se te mostrara una serie de instruccion a seguir según lo que quieras hacer! En cualquier momento puedes entrar al archivo paises.csv y comprobar los cambios realizados. 
 
 Sea como sea aca hay un video explicativo que te ayudará en caso de que necesites más instrucciones.
+
+LINK DE VIDEO: https://youtu.be/mis0UM06qcA
